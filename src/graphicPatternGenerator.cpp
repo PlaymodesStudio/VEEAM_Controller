@@ -13,7 +13,7 @@ graphicPatternGenerator::graphicPatternGenerator() : ofxOceanodeNodeModelExterna
 }
 
 void graphicPatternGenerator::setup(){
-    parameters->add(positions.set("Positions", {ofPoint(0.25, 0.25), ofPoint(0.25, 0.75), ofPoint(0.75, 0.25), ofPoint(0.75, 0.75)}));
+    parameters->add(positions.set("Positions", {glm::vec2(0.25, 0.25), glm::vec2(0.25, 0.75), glm::vec2(0.75, 0.25), glm::vec2(0.75, 0.75)}));
     parameters->add(positionReplicator.set("Position Replicator", 1, 1, 10));
     lastPositionReplicator = positionReplicator;
     parameters->add(color.set("Color", ofColor::red, ofColor::white, ofColor::black));
@@ -208,7 +208,7 @@ void graphicPatternGenerator::draw(){
 void graphicPatternGenerator::mousePressed(ofMouseEventArgs &a){
     bool foundPoint = false;
     for(int i = 0; i < positions.get().size() && !foundPoint ; i++){
-        auto point = positions.get()[i] * ofPoint(ofGetWidth(), ofGetHeight());
+        auto point = positions.get()[i] * glm::vec2(ofGetWidth(), ofGetHeight());
         if(ofRectangle(point.x - 20, point.y - 20, 40, 40).inside(a)){
             pointDraggingIndex = i;
             foundPoint = true;
@@ -216,14 +216,14 @@ void graphicPatternGenerator::mousePressed(ofMouseEventArgs &a){
     }
     if(ofGetKeyPressed(OF_KEY_SHIFT)){
         if(foundPoint){
-            vector<ofPoint> positionsCopy = positions;
+            vector<glm::vec2> positionsCopy = positions;
             positionsCopy.erase(positionsCopy.begin() + pointDraggingIndex);
-            parameters->get("Positions").cast<vector<ofPoint>>().set(positionsCopy);
+            parameters->get("Positions").cast<vector<glm::vec2>>().set(positionsCopy);
             pointDraggingIndex = -1;
         }else{
-            vector<ofPoint> positionsCopy = positions;
-            positionsCopy.push_back(ofPoint(a.x / ofGetWidth(), a.y/ofGetHeight()));
-            parameters->get("Positions").cast<vector<ofPoint>>().set(positionsCopy);
+            vector<glm::vec2> positionsCopy = positions;
+            positionsCopy.push_back(glm::vec2(a.x / ofGetWidth(), a.y/ofGetHeight()));
+            parameters->get("Positions").cast<vector<glm::vec2>>().set(positionsCopy);
         }
     }
 }
@@ -235,15 +235,15 @@ void graphicPatternGenerator::mouseReleased(ofMouseEventArgs &a){
 void graphicPatternGenerator::mouseDragged(ofMouseEventArgs &a){
     if(pointDraggingIndex != -1){
         if(ofGetKeyPressed(OF_KEY_ALT)){
-            ofPoint oldPos = positions.get()[pointDraggingIndex];
-            ofPoint step = oldPos - (a / ofPoint((float)ofGetWidth(), (float)ofGetHeight()));
-            vector<ofPoint> positionsCopy = positions;
+            glm::vec2 oldPos = positions.get()[pointDraggingIndex];
+            glm::vec2 step = oldPos - (a / glm::vec2((float)ofGetWidth(), (float)ofGetHeight()));
+            vector<glm::vec2> positionsCopy = positions;
             positionsCopy[pointDraggingIndex] = oldPos - (step/100);
-            parameters->get("Positions").cast<vector<ofPoint>>().set(positionsCopy);
+            parameters->get("Positions").cast<vector<glm::vec2>>().set(positionsCopy);
         }else{
-            vector<ofPoint> positionsCopy = positions;
-            positionsCopy[pointDraggingIndex] = a / ofPoint(ofGetWidth(), ofGetHeight());
-            parameters->get("Positions").cast<vector<ofPoint>>().set(positionsCopy);
+            vector<glm::vec2> positionsCopy = positions;
+            positionsCopy[pointDraggingIndex] = a / glm::vec2(ofGetWidth(), ofGetHeight());
+            parameters->get("Positions").cast<vector<glm::vec2>>().set(positionsCopy);
         }
     }
 }

@@ -31,10 +31,10 @@ public:
     virtual void presetRecallBeforeSettingParameters(ofJson &json) override{
         if(json.count("Position_points") == 1){
             vector<string> positionsStrVec = ofSplitString(json["Position_points"], "_|_");
-            vector<ofPoint> newPositions;
+            vector<glm::vec2> newPositions;
             newPositions.resize(positionsStrVec.size());
             for(int i = 0; i < newPositions.size(); i++){
-                newPositions[i] = ofFromString<ofPoint>(positionsStrVec[i]);
+                newPositions[i] = ofFromString<glm::vec2>(positionsStrVec[i]);
             }
             positions = newPositions;
         }
@@ -70,7 +70,7 @@ private:
     
     ofEventListeners listeners;
     
-    ofParameter<vector<ofPoint>> positions;
+    ofParameter<vector<glm::vec2>> positions;
     ofParameter<int>    positionReplicator;
     ofParameter<ofColor> color;
     ofParameter<vector<float>> color_red;

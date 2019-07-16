@@ -3,6 +3,8 @@
 #include "waveScope.h"
 #include "positionsCreator.h"
 #include "vertexToLines.h"
+#include "graphicPatternGenerator.h"
+#include "polylinesSVGRenderer.h"
 
 
 //--------------------------------------------------------------
@@ -14,6 +16,8 @@ void ofApp::setup(){
     reg->registerModel<waveScope>("LedNodes");
     reg->registerModel<positionsCreator>("VECTOR");
     reg->registerModel<vertexToLines>("VECTOR");
+    reg->registerModel<graphicPatternGenerator>("VECTOR");
+    reg->registerModel<polylinesSVGRenderer>("VECTOR");
 //    reg->registerModel<senderManager>("LedNodes");
 //    reg->registerModel<colorApplier>("LedNodes");
 //    reg->registerModel<textureRecorder>("LedNodes");
