@@ -23,7 +23,7 @@ private:
     
     ofParameter<vector<float>> positionX;
     ofParameter<vector<float>> positionY;
-    ofParameter<vector<ofPoint>> output;
+    ofParameter<vector<glm::vec2>> output;
 };
 
 #endif /* positionsCreator_h */

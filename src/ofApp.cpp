@@ -1,19 +1,27 @@
 #include "ofApp.h"
 #include "oscillatorTexture.h"
 #include "waveScope.h"
+#include "positionsCreator.h"
+#include "vertexToLines.h"
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofDisableArbTex();
     auto reg = make_shared<ofxOceanodeNodeRegistry>();
     auto treg = make_shared<ofxOceanodeTypesRegistry>();
     reg->registerModel<oscillatorTexture>("LedNodes");
     reg->registerModel<waveScope>("LedNodes");
+    reg->registerModel<positionsCreator>("VECTOR");
+    reg->registerModel<vertexToLines>("VECTOR");
 //    reg->registerModel<senderManager>("LedNodes");
 //    reg->registerModel<colorApplier>("LedNodes");
 //    reg->registerModel<textureRecorder>("LedNodes");
 //    reg->registerModel<scriptModule>("Scripting");
 //    reg->registerModel<textureUnifier>("LedNodes");
     treg->registerType<ofTexture*>();
+    treg->registerType<vector<pair<ofPolyline, ofColor>>>();
+    treg->registerType<vector<glm::vec2>>();
     
     
     container = make_shared<ofxOceanodeContainer>(reg, treg);
@@ -30,7 +38,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
 }
 
 //--------------------------------------------------------------
